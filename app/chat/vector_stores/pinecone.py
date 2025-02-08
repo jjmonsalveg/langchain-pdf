@@ -14,3 +14,8 @@ os.environ["PINECONE_API_KEY"] = os.getenv("PINE_CONE_API_KEY")
 vector_stores = Pinecone.from_existing_index(
     os.getenv("PINE_CONE_INDEX_NAME"), embeddings
 )
+
+
+def build_retriever(chat_args):
+    search_kwargs = {"filter": {"pdf_id": chat_args.pdf_id}}
+    return vector_stores.as_retriever(search_kwargs=search_kwargs)
